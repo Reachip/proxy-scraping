@@ -1,0 +1,11 @@
+aiofiles==0.3.2
+aiohttp==3.3.2
+aiosqlite==0.3.0
+async-timeout==3.0.0
+asyncio==3.4.3
+attrs==18.1.0
+chardet==3.0.4
+idna==2.7
+idna-ssl==1.1.0
+multidict==4.3.1
+yarl==1.2.6
