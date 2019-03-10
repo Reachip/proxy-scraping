@@ -1,4 +1,4 @@
-import time 
+import time
 import re
 import asyncio
 import aiohttp
@@ -13,7 +13,7 @@ async def make_request(website):
 
 async def extract_ip_adress_from_html(loop, html):
     http_proxy_ip = []
-    
+
     ip = await loop.run_in_executor(
         None, re.findall, r"((?:\d{1,3}\.){3}\d{1,3})", str(html)
     )
@@ -25,18 +25,23 @@ async def extract_ip_adress_from_html(loop, html):
 
 async def write_ip_in_file(loop, ips):
     async with aiofiles.open("proxy-list.txt", mode="w+") as txt_file:
-        [await txt_file.write("\n".join(ip)) for ip in ips] 
+        [await txt_file.write("\n".join(ip)) for ip in ips]
+
 
 async def fetch_ips_from_website(loop, website):
     html = await make_request(website)
-    ips =  await extract_ip_adress_from_html(loop, html)
+    ips = await extract_ip_adress_from_html(loop, html)
     await write_ip_in_file(loop, ips)
 
-async def main(loop, websites):
-    tasks = [loop.create_task(fetch_ips_from_website(loop, website)) for website in websites]
 
-    for task in tasks: 
-        await task 
+async def main(loop, websites):
+    tasks = [
+        loop.create_task(fetch_ips_from_website(loop, website)) for website in websites
+    ]
+
+    for task in tasks:
+        await task
+
 
 proxy_collection_websites = (
     "https://free-proxy-list.net/",
@@ -47,4 +52,4 @@ proxy_collection_websites = (
 )
 
 loop = asyncio.get_event_loop()
-loop.run_until_complete(main(loop, proxy_collection_websites)) 
+loop.run_until_complete(main(loop, proxy_collection_websites))
