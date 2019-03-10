@@ -1,4 +1,3 @@
-import time
 import re
 import asyncio
 import aiohttp
